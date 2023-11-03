@@ -4,6 +4,13 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerCreditController;
+use App\Http\Controllers\CustomerCreditAssignWeightController;
+use App\Http\Controllers\CustomerCreditNormalizationController;
+use App\Http\Controllers\CustomerCreditEvaluateAlternativeController;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\CriteriaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +40,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    Route::post('/report', [ProfileController::class, 'edit'])->name('report');
+    
+    Route::resource('customer', CustomerController::class);
+    Route::resource('customer/credit', CustomerCreditController::class);
+    Route::resource('customer/credit/assign-weight', CustomerCreditAssignWeightController::class);
+    Route::resource('customer/credit/normalization', CustomerCreditNormalizationController::class);
+    Route::resource('customer/credit/evaluate-alternative', CustomerCreditEvaluateAlternativeController::class);
+    Route::resource('status', StatusController::class);
+    Route::resource('criteria', CriteriaController::class);
+
 });
 
 require __DIR__.'/auth.php';
