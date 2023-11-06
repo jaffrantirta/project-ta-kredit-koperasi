@@ -38,7 +38,7 @@ class CustomerQuery extends PaginatedQuery
     protected function getAllowedIncludes(): array
     {
         return [
-            //AllowedInclude::relationship('user'),
+            AllowedInclude::relationship('user'),
         ];
     }
 }

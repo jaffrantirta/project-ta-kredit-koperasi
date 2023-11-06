@@ -69,7 +69,7 @@ export default function SidebarPartial({ menus }: { menus: any }) {
                                                 key={`child-${childIndex}`}
                                                 url={
                                                     !childItem.hasChild
-                                                        ? childItem.url
+                                                        ? route(childItem.url)
                                                         : "#"
                                                 }
                                             >
