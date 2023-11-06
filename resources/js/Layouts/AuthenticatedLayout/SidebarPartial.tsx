@@ -67,6 +67,9 @@ export default function SidebarPartial({ menus }: { menus: any }) {
                                         return (
                                             <Item
                                                 key={`child-${childIndex}`}
+                                                isActive={route().current(
+                                                    childItem.url
+                                                )}
                                                 url={
                                                     !childItem.hasChild
                                                         ? route(childItem.url)

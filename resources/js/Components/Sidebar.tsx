@@ -11,15 +11,19 @@ const Item = ({
 }) => {
     if (isActive)
         return (
-            <div className="dark:bg-gray-900 dark:text-slate-300 p-3 ml-5 mt-3 rounded-tl-full rounded-bl-full">
-                <Link href={url}>{children}</Link>
-            </div>
+            <Link href={url}>
+                <div className="dark:bg-gray-900 dark:text-slate-300 bg-slate-200 p-3 ml-5 mt-3 rounded-tl-full rounded-bl-full">
+                    {children}
+                </div>
+            </Link>
         );
     else
         return (
-            <div className="transition-all duration-300 hover:dark:bg-gray-600 dark:text-slate-400 hover:dark:text-slate-100 p-3 ml-5 mt-3 rounded-tl-full rounded-bl-full">
-                <Link href={url}>{children}</Link>
-            </div>
+            <Link href={url}>
+                <div className="transition-all duration-300 hover:dark:bg-gray-600 dark:text-slate-400 hover:dark:text-slate-100 p-3 ml-5 mt-3 rounded-tl-full rounded-bl-full">
+                    {children}
+                </div>
+            </Link>
         );
 };
 

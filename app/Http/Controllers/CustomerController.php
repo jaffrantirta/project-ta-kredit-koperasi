@@ -17,6 +17,11 @@ class CustomerController extends Controller
         return Inertia::render('Customer/List', $data);
     }
 
+    public function create()
+    {
+        return Inertia::render('Customer/Create');
+    }
+
     public function store(CustomerStoreRequest $request)
     {
         return Customer::create($request->validated());
