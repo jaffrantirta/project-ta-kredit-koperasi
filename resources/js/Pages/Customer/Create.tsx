@@ -1,6 +1,7 @@
 import Main from "@/Components/Main";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout/Index";
 import { Head, useForm } from "@inertiajs/react";
+import { log } from "console";
 import {
     Button,
     Label,
@@ -12,22 +13,41 @@ import {
 import { FormEventHandler } from "react";
 
 export default function Create({ auth }: { auth: any }) {
-    const { data, setData, post, errors, processing, recentlySuccessful } =
-        useForm({
-            "user[name]": "",
-            "user[email]": "",
-            "customer[nik]": "",
-            "customer[phone]": "",
-            "customer[gender]": "",
-            "customer[birthday]": "",
-            "customer[occupotion]": "",
-            "customer[address]": "",
-        });
+    const {
+        data,
+        setData,
+        post,
+        errors,
+        hasErrors,
+        processing,
+        recentlySuccessful,
+    } = useForm({
+        user: {
+            name: "",
+            email: "",
+            password: "password",
+            password_confirmation: "password",
+        },
+        customer: {
+            nik: "",
+            phone: "",
+            gender: "",
+            birthday: "",
+            occupation: "",
+            address: "",
+        },
+        isCustomer: true,
+    });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route("customer.store"));
+        post(route("register"));
     };
+
+    const getError = (param: any) => {
+        return JSON.parse(JSON.stringify(errors))[param];
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -51,23 +71,31 @@ export default function Create({ auth }: { auth: any }) {
                                 autoFocus
                                 autoComplete="username"
                                 type="text"
-                                color={errors["user[name]"] ? `failure` : ``}
-                                helperText={errors["user[name]"]}
-                                value={data["user[name]"]}
+                                color={getError("user.name") ? `failure` : ``}
+                                helperText={getError("user.name")}
+                                value={data.user.name}
                                 onChange={(e) =>
-                                    setData("user[name]", e.target.value)
+                                    setData("user", {
+                                        ...data.user,
+                                        name: e.target.value,
+                                    })
                                 }
                             />
                         </div>
                         <div>
                             <Label>NIK</Label>
                             <TextInput
-                                type="number"
-                                color={errors["customer[nik]"] ? `failure` : ``}
-                                helperText={errors["customer[nik]"]}
-                                value={data["customer[nik]"]}
+                                type="text"
+                                color={
+                                    getError("customer.nik") ? `failure` : ``
+                                }
+                                helperText={getError("customer.nik")}
+                                value={data.customer.nik}
                                 onChange={(e) =>
-                                    setData("customer[nik]", e.target.value)
+                                    setData("customer", {
+                                        ...data.customer,
+                                        nik: e.target.value,
+                                    })
                                 }
                             />
                         </div>
@@ -76,12 +104,15 @@ export default function Create({ auth }: { auth: any }) {
                             <TextInput
                                 type="number"
                                 color={
-                                    errors["customer[phone]"] ? `failure` : ``
+                                    getError("customer.phone") ? `failure` : ``
                                 }
-                                helperText={errors["customer[phone]"]}
-                                value={data["customer[phone]"]}
+                                helperText={getError("customer.phone")}
+                                value={data.customer.phone}
                                 onChange={(e) =>
-                                    setData("customer[phone]", e.target.value)
+                                    setData("customer", {
+                                        ...data.customer,
+                                        phone: e.target.value,
+                                    })
                                 }
                             />
                         </div>
@@ -89,11 +120,14 @@ export default function Create({ auth }: { auth: any }) {
                             <Label>Email</Label>
                             <TextInput
                                 type="email"
-                                color={errors["user[email]"] ? `failure` : ``}
-                                helperText={errors["user[email]"]}
-                                value={data["user[email]"]}
+                                color={getError("user.email") ? `failure` : ``}
+                                helperText={getError("user.email")}
+                                value={data.user.email}
                                 onChange={(e) =>
-                                    setData("user[email]", e.target.value)
+                                    setData("user", {
+                                        ...data.user,
+                                        email: e.target.value,
+                                    })
                                 }
                             />
                         </div>
@@ -101,12 +135,15 @@ export default function Create({ auth }: { auth: any }) {
                             <Label>Jenis Kelamin</Label>
                             <Select
                                 color={
-                                    errors["customer[gender]"] ? `failure` : ``
+                                    getError("customer.gender") ? `failure` : ``
                                 }
-                                helperText={errors["customer[gender]"]}
-                                value={data["customer[gender]"]}
+                                helperText={getError("customer.gender")}
+                                value={data.customer.gender}
                                 onChange={(e) =>
-                                    setData("customer[gender]", e.target.value)
+                                    setData("customer", {
+                                        ...data.customer,
+                                        gender: e.target.value,
+                                    })
                                 }
                             >
                                 <option value={`male`}>Laki - Laki</option>
@@ -118,17 +155,17 @@ export default function Create({ auth }: { auth: any }) {
                             <TextInput
                                 type="date"
                                 color={
-                                    errors["customer[birthday]"]
+                                    getError("customer.birthday")
                                         ? `failure`
                                         : ``
                                 }
-                                helperText={errors["customer[birthday]"]}
-                                value={data["customer[birthday]"]}
+                                helperText={getError("customer.birthday")}
+                                value={data.customer.birthday}
                                 onChange={(e) =>
-                                    setData(
-                                        "customer[birthday]",
-                                        e.target.value
-                                    )
+                                    setData("customer", {
+                                        ...data.customer,
+                                        birthday: e.target.value,
+                                    })
                                 }
                             />
                         </div>
@@ -137,17 +174,17 @@ export default function Create({ auth }: { auth: any }) {
                             <TextInput
                                 type="text"
                                 color={
-                                    errors["customer[occupotion]"]
+                                    getError("customer.occupation")
                                         ? `failure`
                                         : ``
                                 }
-                                helperText={errors["customer[occupotion]"]}
-                                value={data["customer[occupotion]"]}
+                                helperText={getError("customer.occupation")}
+                                value={data.customer.occupation}
                                 onChange={(e) =>
-                                    setData(
-                                        "customer[occupotion]",
-                                        e.target.value
-                                    )
+                                    setData("customer", {
+                                        ...data.customer,
+                                        occupation: e.target.value,
+                                    })
                                 }
                             />
                         </div>
@@ -156,12 +193,17 @@ export default function Create({ auth }: { auth: any }) {
                             <Textarea
                                 rows={5}
                                 color={
-                                    errors["customer[address]"] ? `failure` : ``
+                                    getError("customer.address")
+                                        ? `failure`
+                                        : ``
                                 }
-                                helperText={errors["customer[address]"]}
-                                value={data["customer[address]"]}
+                                helperText={getError("customer.address")}
+                                value={data.customer.address}
                                 onChange={(e) =>
-                                    setData("customer[address]", e.target.value)
+                                    setData("customer", {
+                                        ...data.customer,
+                                        address: e.target.value,
+                                    })
                                 }
                             />
                         </div>
