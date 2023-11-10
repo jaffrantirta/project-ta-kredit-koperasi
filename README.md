@@ -20,7 +20,7 @@ install ini pada laptop
 
 ## Instalasi
 
-buka project pada VS code. kemudian klik **terminal** + **new terminal**.
+buka project pada VS code. kemudian klik `Terminal` + `New Terminal`.
 lalu jalankan perintah dibawah:
 
 ```
@@ -34,7 +34,7 @@ kemudian install npm packages dengan cara yang sama:
 npm install
 ```
 
-kemudian buat file dengan nama ".env" dengan cara copy **.env.example** di root project dan paste di root project.
+kemudian buat file dengan nama `.env` dengan cara copy `.env.example` di root project dan paste di root project.
 
 atau jika pakai macbook jalankan perintah ini:
 
