@@ -21,7 +21,7 @@ class CreateSuperAdmin extends Command
 
         $user->assignRole('super-admin');
 
-        $this->info("Super admin sudah dibuat.");
+        $this->info("Super admin sudah dibuat. email nya 'super@admin' dan password nya 'password'");
         $this->info("Made with love by ANAK AGUNG ISTRI DINA PRABAWATI");
     }
 }

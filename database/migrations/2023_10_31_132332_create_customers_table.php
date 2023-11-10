@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('occupation');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

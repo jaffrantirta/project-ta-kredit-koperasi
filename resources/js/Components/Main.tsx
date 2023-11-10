@@ -1,6 +1,4 @@
-import { PageProps } from "@/types";
 import { Footer } from "flowbite-react";
-import React from "react";
 
 export default function Main({ children }: any) {
     return (

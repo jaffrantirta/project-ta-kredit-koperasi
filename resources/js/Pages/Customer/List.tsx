@@ -2,8 +2,15 @@ import Main from "@/Components/Main";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout/Index";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Head } from "@inertiajs/react";
-import { Alert, Button, Pagination, Table, Tooltip } from "flowbite-react";
+import { Head, useForm } from "@inertiajs/react";
+import {
+    Alert,
+    Button,
+    Pagination,
+    Table,
+    Toast,
+    Tooltip,
+} from "flowbite-react";
 import moment from "moment";
 
 export default function List({
@@ -13,6 +20,12 @@ export default function List({
     customers: any;
     auth: any;
 }) {
+    const { delete: remove, recentlySuccessful } = useForm();
+
+    const destroy = (id: number) => {
+        remove(route("customer.destroy", id));
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -25,6 +38,12 @@ export default function List({
             <Head title="List Nasabah" />
 
             <Main>
+                {recentlySuccessful && (
+                    <Toast>
+                        <div>Sukses!</div>
+                        <Toast.Toggle />
+                    </Toast>
+                )}
                 <div className="flex justify-center md:justify-end">
                     <Button
                         pill
@@ -54,6 +73,12 @@ export default function List({
                                     },
                                     index: number
                                 ) => {
+                                    console.log(
+                                        route("customer.destroy", {
+                                            customer: item.id,
+                                        })
+                                    );
+
                                     return (
                                         <Table.Row key={index}>
                                             <Table.Cell>{index + 1}</Table.Cell>
@@ -91,7 +116,13 @@ export default function List({
                                                     </Button>
                                                 </Tooltip>
                                                 <Tooltip content="Hapus">
-                                                    <Button pill color="red">
+                                                    <Button
+                                                        onClick={() =>
+                                                            destroy(item.id)
+                                                        }
+                                                        pill
+                                                        color="red"
+                                                    >
                                                         <FontAwesomeIcon
                                                             icon={faTrash}
                                                         />
@@ -105,17 +136,18 @@ export default function List({
                         </Table.Body>
                     </Table>
                 </div>
-                <div className="flex justify-center md:justify-end my-3">
-                    <Pagination
-                        layout="table"
-                        currentPage={customers.current_page}
-                        totalPages={customers.total}
-                        onPageChange={(e) => console.log(e)}
-                    />
-                </div>
-                {customers.total < 1 && (
+                {customers.total < 1 ? (
                     <div className="flex justify-center w-full p-5">
                         <Alert>Tidak ada data.</Alert>
+                    </div>
+                ) : (
+                    <div className="flex justify-center md:justify-end my-3">
+                        <Pagination
+                            layout="table"
+                            currentPage={customers.current_page}
+                            totalPages={customers.total}
+                            onPageChange={(e) => console.log(e)}
+                        />
                     </div>
                 )}
             </Main>
