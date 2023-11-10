@@ -19,10 +19,12 @@ export default function SidebarPartial({ menus }: { menus: any }) {
                             hasChild: boolean;
                             url: string;
                             title: string;
+                            params: any;
                         }[];
                         url: string;
                         title: string;
                         isOpen: boolean;
+                        params: any;
                     },
                     index: number
                 ) => {
@@ -30,13 +32,16 @@ export default function SidebarPartial({ menus }: { menus: any }) {
                     if (item.hasChild) {
                         child = item.child;
                     }
-                    console.log(route().current(item.url), item.title);
+
                     return (
                         <React.Fragment key={`item-${index}`}>
                             <Item
-                                key={`item-${index}`}
                                 isActive={route().current(item.url)}
-                                url={!item.hasChild ? route(item.url) : "#"}
+                                url={
+                                    !item.hasChild
+                                        ? route(item.url, item.params)
+                                        : "#"
+                                }
                             >
                                 <p
                                     className="flex items-center gap-5"
@@ -61,6 +66,7 @@ export default function SidebarPartial({ menus }: { menus: any }) {
                                             hasChild: boolean;
                                             url: string;
                                             title: string;
+                                            params: any;
                                         },
                                         childIndex: number
                                     ) => {
@@ -72,7 +78,10 @@ export default function SidebarPartial({ menus }: { menus: any }) {
                                                 )}
                                                 url={
                                                     !childItem.hasChild
-                                                        ? route(childItem.url)
+                                                        ? route(
+                                                              childItem.url,
+                                                              childItem.params
+                                                          )
                                                         : "#"
                                                 }
                                             >

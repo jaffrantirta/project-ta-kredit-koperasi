@@ -1,16 +1,9 @@
 import Main from "@/Components/Main";
+import Message from "@/Components/Message";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout/Index";
 import { Head, useForm } from "@inertiajs/react";
-import { log } from "console";
-import {
-    Button,
-    Label,
-    Select,
-    Table,
-    TextInput,
-    Textarea,
-} from "flowbite-react";
-import { FormEventHandler } from "react";
+import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
+import { FormEventHandler, useEffect } from "react";
 
 export default function Create({ auth }: { auth: any }) {
     const {
@@ -18,8 +11,8 @@ export default function Create({ auth }: { auth: any }) {
         setData,
         post,
         errors,
-        hasErrors,
         processing,
+        reset,
         recentlySuccessful,
     } = useForm({
         user: {
@@ -43,6 +36,10 @@ export default function Create({ auth }: { auth: any }) {
         e.preventDefault();
         post(route("register"));
     };
+
+    useEffect(() => {
+        recentlySuccessful && reset();
+    }, [recentlySuccessful]);
 
     const getError = (param: any) => {
         return JSON.parse(JSON.stringify(errors))[param];
@@ -146,6 +143,7 @@ export default function Create({ auth }: { auth: any }) {
                                     })
                                 }
                             >
+                                <option>Pilih</option>
                                 <option value={`male`}>Laki - Laki</option>
                                 <option value={`female`}>Perempuan</option>
                             </Select>
@@ -207,10 +205,13 @@ export default function Create({ auth }: { auth: any }) {
                                 }
                             />
                         </div>
-                        <div className="flex justify-center items-center col-span-2">
-                            <Button type="submit" pill>
+                        <div className="flex gap-3 transition-all justify-center items-center col-span-2">
+                            <Button disabled={processing} type="submit" pill>
                                 Sumbit
                             </Button>
+                            <Message show={recentlySuccessful}>
+                                Tersimpan.
+                            </Message>
                         </div>
                     </form>
                 </div>

@@ -13,7 +13,7 @@ class CustomerController extends Controller
 {
     public function index(CustomerQuery $customerQuery)
     {
-        $data['customers'] = $customerQuery->with('user')->paginate();
+        $data['customers'] = $customerQuery->includes()->filterSortPaginateWithAppend();
         return Inertia::render('Customer/List', $data);
     }
 
@@ -29,7 +29,8 @@ class CustomerController extends Controller
 
     public function show($customer, CustomerQuery $query)
     {
-        return $query->includes()->findAndAppend($customer);
+        $data['customer'] = $query->includes()->findAndAppend($customer);
+        return Inertia::render('Customer/Show', $data);
     }
 
     public function update(CustomerUpdateRequest $request, Customer $customer)

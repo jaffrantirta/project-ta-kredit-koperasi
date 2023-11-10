@@ -20,9 +20,9 @@ class Customer extends Model
         'occupation',
     ];
 
-    protected $casts = [
-        'gender' => GenderEnum::class,
-    ];
+    public function getGenderAttribute($value){
+        return GenderEnum::toString($value);
+    }
 
     public function user(): BelongsTo
     {

@@ -7,7 +7,7 @@ return [
         ],
         [
             'name' => 'update-customer',
-            'roles' => ['super-admin','admin'],
+            'roles' => ['super-admin','admin','customer'],
         ],
         [
             'name' => 'remove-customer',

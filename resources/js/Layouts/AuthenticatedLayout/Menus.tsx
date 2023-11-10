@@ -12,6 +12,7 @@ export const menus = [
             {
                 title: "List",
                 url: "customer.index",
+                params: { include: ["user"] },
                 hasChild: false,
             },
             {
