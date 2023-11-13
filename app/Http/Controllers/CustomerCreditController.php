@@ -11,12 +11,13 @@ class CustomerCreditController extends Controller
 {
     public function index(CustomerCreditQuery $customercreditQuery)
     {
-        return $customercreditQuery->includes()->filterSortPaginateWithAppend();
+        $data['credits'] = $customercreditQuery->includes()->filterSortPaginateWithAppend();
+        return Inertia::render('Credit/List', $data);
     }
 
     public function store(CustomerCreditStoreRequest $request)
     {
-        return CustomerCredit::create($request->validated());
+        return $CustomerCredit::create($request->validated());
     }
 
     public function show($customercredit, CustomerCreditQuery $query)

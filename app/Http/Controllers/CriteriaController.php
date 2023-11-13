@@ -6,12 +6,15 @@ use App\Http\Requests\CriteriaStoreRequest;
 use App\Http\Requests\CriteriaUpdateRequest;
 use App\Models\Criteria;
 use App\Queries\CriteriaQuery;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CriteriaController extends Controller
 {
     public function index(CriteriaQuery $criteriaQuery)
     {
-        return $criteriaQuery->includes()->filterSortPaginateWithAppend();
+        $data['criterias'] = $criteriaQuery->includes()->filterSortPaginateWithAppend();
+        return Inertia::render('Criteria/List', $data);
     }
 
     public function store(CriteriaStoreRequest $request)

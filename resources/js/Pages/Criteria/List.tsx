@@ -14,16 +14,16 @@ import {
 import moment from "moment";
 
 export default function List({
-    customers,
+    criterias,
     auth,
 }: {
-    customers: any;
+    criterias: any;
     auth: any;
 }) {
     const { delete: remove, recentlySuccessful } = useForm();
 
     const destroy = (id: number) => {
-        remove(route("customer.destroy", id));
+        // remove(route("criteria.destroy", id));
     };
 
     return (
@@ -31,11 +31,11 @@ export default function List({
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    List Nasabah
+                    List Kriteria
                 </h2>
             }
         >
-            <Head title="List Nasabah" />
+            <Head title="List Kriteria" />
 
             <Main>
                 {recentlySuccessful && (
@@ -48,7 +48,7 @@ export default function List({
                     <Button
                         pill
                         className="my-3"
-                        href={route("customer.create")}
+                        href={route("criteria.create")}
                     >
                         Tambah
                     </Button>
@@ -57,56 +57,39 @@ export default function List({
                     <Table>
                         <Table.Head>
                             <Table.HeadCell>No.</Table.HeadCell>
-                            <Table.HeadCell>Nama</Table.HeadCell>
-                            <Table.HeadCell>Jenis Kelamin</Table.HeadCell>
-                            <Table.HeadCell>Terdaftar pada:</Table.HeadCell>
+                            <Table.HeadCell>Nama Kriteria</Table.HeadCell>
+                            <Table.HeadCell>Bobot</Table.HeadCell>
                             <Table.HeadCell>Aksi</Table.HeadCell>
                         </Table.Head>
                         <Table.Body>
-                            {customers.data.map(
+                            {criterias.data.map(
                                 (
                                     item: {
                                         id: number;
-                                        user: { name: string };
-                                        gender: string;
+                                        name: string;
+                                        weight: number;
                                         created_at: string;
                                     },
                                     index: number
                                 ) => {
-                                    console.log(
-                                        route("customer.destroy", {
-                                            customer: item.id,
-                                        })
-                                    );
-
                                     return (
                                         <Table.Row key={index}>
                                             <Table.Cell>{index + 1}</Table.Cell>
+                                            <Table.Cell>{item.name}</Table.Cell>
                                             <Table.Cell>
-                                                {item.user.name}
-                                            </Table.Cell>
-                                            <Table.Cell>
-                                                {item.gender}
-                                            </Table.Cell>
-                                            <Table.Cell>
-                                                {moment(item.created_at).format(
-                                                    "LLL"
-                                                )}
+                                                {item.weight}
                                             </Table.Cell>
                                             <Table.Cell className="flex gap-3">
                                                 <Tooltip content="Edit">
                                                     <Button
                                                         pill
-                                                        href={route(
-                                                            "customer.show",
-                                                            {
-                                                                customer:
-                                                                    item.id,
-                                                                include: [
-                                                                    "user",
-                                                                ],
-                                                            }
-                                                        )}
+                                                        // href={route(
+                                                        //     "criteria.show",
+                                                        //     {
+                                                        //         criteria:
+                                                        //             item.id,
+                                                        //     }
+                                                        // )}
                                                     >
                                                         <FontAwesomeIcon
                                                             icon={faPencil}
@@ -134,7 +117,7 @@ export default function List({
                         </Table.Body>
                     </Table>
                 </div>
-                {customers.total < 1 ? (
+                {criterias.total < 1 ? (
                     <div className="flex justify-center w-full p-5">
                         <Alert>Tidak ada data.</Alert>
                     </div>
@@ -142,8 +125,8 @@ export default function List({
                     <div className="flex justify-center md:justify-end my-3">
                         <Pagination
                             layout="table"
-                            currentPage={customers.current_page}
-                            totalPages={customers.total}
+                            currentPage={criterias.current_page}
+                            totalPages={criterias.total}
                             onPageChange={(e) => console.log(e)}
                         />
                     </div>

@@ -19,7 +19,7 @@ class CriteriaFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'weight' => fake()->numberBetween(1, 100)
+            'weight' => 5
         ];
     }
 }

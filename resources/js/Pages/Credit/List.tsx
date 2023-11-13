@@ -13,13 +13,7 @@ import {
 } from "flowbite-react";
 import moment from "moment";
 
-export default function List({
-    customers,
-    auth,
-}: {
-    customers: any;
-    auth: any;
-}) {
+export default function List({ credits, auth }: { credits: any; auth: any }) {
     const { delete: remove, recentlySuccessful } = useForm();
 
     const destroy = (id: number) => {
@@ -63,7 +57,7 @@ export default function List({
                             <Table.HeadCell>Aksi</Table.HeadCell>
                         </Table.Head>
                         <Table.Body>
-                            {customers.data.map(
+                            {credits.data.map(
                                 (
                                     item: {
                                         id: number;
@@ -134,7 +128,7 @@ export default function List({
                         </Table.Body>
                     </Table>
                 </div>
-                {customers.total < 1 ? (
+                {credits.total < 1 ? (
                     <div className="flex justify-center w-full p-5">
                         <Alert>Tidak ada data.</Alert>
                     </div>
@@ -142,8 +136,8 @@ export default function List({
                     <div className="flex justify-center md:justify-end my-3">
                         <Pagination
                             layout="table"
-                            currentPage={customers.current_page}
-                            totalPages={customers.total}
+                            currentPage={credits.current_page}
+                            totalPages={credits.total}
                             onPageChange={(e) => console.log(e)}
                         />
                     </div>
