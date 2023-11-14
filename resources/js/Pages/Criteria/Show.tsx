@@ -1,52 +1,46 @@
 import Main from "@/Components/Main";
 import Authenticated from "@/Layouts/AuthenticatedLayout/Index";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Head } from "@inertiajs/react";
-import { Card } from "flowbite-react";
-import moment from "moment";
+import { Button, Card, Tooltip } from "flowbite-react";
 
-export default function Show({ customer, auth }: { customer: any; auth: any }) {
+export default function Show({ criteria, auth }: { criteria: any; auth: any }) {
     return (
         <Authenticated
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Detail Nasabah {customer.user?.name}
+                    Detail Kriteria {criteria.name}
                 </h2>
             }
         >
-            <Head title="Detail Nasabah" />
+            <Head title="Detail Kriteria" />
 
             <Main>
                 <Card>
+                    <div className="w-full flex justify-end">
+                        <Tooltip content="Edit">
+                            <Button
+                                href={route("criteria.edit", {
+                                    criterion: criteria.id,
+                                })}
+                            >
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </Button>
+                        </Tooltip>
+                    </div>
+                    <div className="w-full border-b"></div>
                     <div className="grid grid-cols-2">
-                        <p>NIK</p>
-                        <p className="font-bold">{customer.nik}</p>
+                        <p>Nama Kriteria</p>
+                        <p className="font-bold">{criteria.name}</p>
                     </div>
 
                     <div className="grid grid-cols-2">
-                        <p>Nama</p>
-                        <p className="font-bold">{customer.user?.name}</p>
-                    </div>
-
-                    <div className="grid grid-cols-2">
-                        <p>Email</p>
-                        <p className="font-bold">{customer.user?.email}</p>
-                    </div>
-
-                    <div className="grid grid-cols-2">
-                        <p>Nomor Telepon</p>
-                        <p className="font-bold">{customer.phone}</p>
-                    </div>
-
-                    <div className="grid grid-cols-2">
-                        <p>Jenis Kelamin</p>
-                        <p className="font-bold">{customer.gender}</p>
-                    </div>
-
-                    <div className="grid grid-cols-2">
-                        <p>Tanggal Lahir</p>
+                        <p>Bobot Kriteria</p>
                         <p className="font-bold">
-                            {moment(customer.birthday).format("LL")}
+                            {criteria.weight}
+                            {"%"}
                         </p>
                     </div>
                 </Card>

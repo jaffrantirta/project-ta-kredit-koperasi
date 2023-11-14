@@ -17,25 +17,38 @@ class CriteriaController extends Controller
         return Inertia::render('Criteria/List', $data);
     }
 
+    public function create()
+    {
+        return Inertia::render('Criteria/Create');
+    }
+
     public function store(CriteriaStoreRequest $request)
     {
-        return Criteria::create($request->validated());
+        Criteria::create($request->validated());
+        return redirect()->back();
     }
 
     public function show($criteria, CriteriaQuery $query)
     {
-        return $query->includes()->findAndAppend($criteria);
+        $data['criteria'] = $query->includes()->findAndAppend($criteria);
+        return Inertia::render('Criteria/Show', $data);
     }
 
-    public function update(CriteriaUpdateRequest $request, Criteria $criteria)
+    public function edit($criteria, CriteriaQuery $query)
     {
-        $criteria->update($request->validated());
-        return $criteria;
+        $data['criteria'] = $query->includes()->findAndAppend($criteria);
+        return Inertia::render('Criteria/Create', $data);
     }
 
-    public function destroy(Criteria $criteria)
+    public function update(CriteriaUpdateRequest $request, Criteria $criterion)
     {
-        $criteria->delete();
-        return response()->noContent();
+        $criterion->update($request->validated());
+        return redirect()->route('criteria.show', ['criterion' => $criterion->id]);
+    }
+
+    public function destroy(Criteria $criterion)
+    {
+        $criterion->delete();
+        return redirect()->back();
     }
 }

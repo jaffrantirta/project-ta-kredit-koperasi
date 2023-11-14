@@ -30,6 +30,7 @@ export const menus = [
             {
                 title: "Kriteria",
                 url: "criteria.index",
+                params: { append: ["weight_summary"] },
                 hasChild: false,
             },
             {

@@ -9,4 +9,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Criteria extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'name',
+        'weight'
+    ];
+
+    public function getWeightSummaryAttribute()
+    {
+        return number_format($this->sum('weight'), 1);
+    }
 }

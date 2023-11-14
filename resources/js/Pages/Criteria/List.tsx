@@ -1,17 +1,17 @@
 import Main from "@/Components/Main";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout/Index";
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Head, useForm } from "@inertiajs/react";
 import {
     Alert,
     Button,
+    Modal,
     Pagination,
     Table,
-    Toast,
     Tooltip,
 } from "flowbite-react";
-import moment from "moment";
+import { useState } from "react";
 
 export default function List({
     criterias,
@@ -21,9 +21,12 @@ export default function List({
     auth: any;
 }) {
     const { delete: remove, recentlySuccessful } = useForm();
+    const [modalShow, setModalShow] = useState(false);
+    const [deletionId, setDeletionId] = useState(0);
 
     const destroy = (id: number) => {
-        // remove(route("criteria.destroy", id));
+        remove(route("criteria.destroy", { criterion: id }));
+        setModalShow(!modalShow);
     };
 
     return (
@@ -38,13 +41,46 @@ export default function List({
             <Head title="List Kriteria" />
 
             <Main>
-                {recentlySuccessful && (
-                    <Toast>
-                        <div>Sukses!</div>
-                        <Toast.Toggle />
-                    </Toast>
-                )}
-                <div className="flex justify-center md:justify-end">
+                {recentlySuccessful && <Alert color={`success`}>Sukses!</Alert>}
+                <Modal
+                    show={modalShow}
+                    onClose={() => setModalShow(!modalShow)}
+                >
+                    <Modal.Header>Yakin hapus?</Modal.Header>
+                    <Modal.Footer>
+                        <Button
+                            onClick={() => setModalShow(!modalShow)}
+                            pill
+                            color="light"
+                        >
+                            Batal
+                        </Button>
+                        <Button
+                            onClick={() => destroy(deletionId)}
+                            pill
+                            color="failure"
+                        >
+                            Ya, Hapus
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                <div className="flex justify-center md:justify-between items-center">
+                    <div>
+                        <p
+                            className={`${
+                                criterias.data[0]?.weight_summary !== "100.0" &&
+                                "text-red-400"
+                            }`}
+                        >
+                            Persentase total bobot:{" "}
+                            {criterias.data[0]?.weight_summary || 0}%
+                        </p>
+                        {criterias.data[0]?.weight_summary !== "100.0" && (
+                            <p className="text-red-600 text-xs italic">
+                                Atur persentase bobot hinggal 100.0%
+                            </p>
+                        )}
+                    </div>
                     <Button
                         pill
                         className="my-3"
@@ -58,7 +94,7 @@ export default function List({
                         <Table.Head>
                             <Table.HeadCell>No.</Table.HeadCell>
                             <Table.HeadCell>Nama Kriteria</Table.HeadCell>
-                            <Table.HeadCell>Bobot</Table.HeadCell>
+                            <Table.HeadCell>Bobot {"(%)"}</Table.HeadCell>
                             <Table.HeadCell>Aksi</Table.HeadCell>
                         </Table.Head>
                         <Table.Body>
@@ -80,27 +116,32 @@ export default function List({
                                                 {item.weight}
                                             </Table.Cell>
                                             <Table.Cell className="flex gap-3">
-                                                <Tooltip content="Edit">
+                                                <Tooltip content="Tampilkan">
                                                     <Button
                                                         pill
-                                                        // href={route(
-                                                        //     "criteria.show",
-                                                        //     {
-                                                        //         criteria:
-                                                        //             item.id,
-                                                        //     }
-                                                        // )}
+                                                        href={route(
+                                                            "criteria.show",
+                                                            {
+                                                                criterion:
+                                                                    item.id,
+                                                            }
+                                                        )}
                                                     >
                                                         <FontAwesomeIcon
-                                                            icon={faPencil}
+                                                            icon={faEye}
                                                         />
                                                     </Button>
                                                 </Tooltip>
                                                 <Tooltip content="Hapus">
                                                     <Button
-                                                        onClick={() =>
-                                                            destroy(item.id)
-                                                        }
+                                                        onClick={() => {
+                                                            setDeletionId(
+                                                                item.id
+                                                            );
+                                                            setModalShow(
+                                                                !modalShow
+                                                            );
+                                                        }}
                                                         pill
                                                         color="red"
                                                     >

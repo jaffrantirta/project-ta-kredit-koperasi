@@ -6,12 +6,14 @@ import { Head, useForm } from "@inertiajs/react";
 import {
     Alert,
     Button,
+    Modal,
     Pagination,
     Table,
     Toast,
     Tooltip,
 } from "flowbite-react";
 import moment from "moment";
+import { useState } from "react";
 
 export default function List({
     customers,
@@ -21,9 +23,12 @@ export default function List({
     auth: any;
 }) {
     const { delete: remove, recentlySuccessful } = useForm();
+    const [modalShow, setModalShow] = useState(false);
+    const [deletionId, setDeletionId] = useState(0);
 
     const destroy = (id: number) => {
         remove(route("customer.destroy", id));
+        setModalShow(!modalShow);
     };
 
     return (
@@ -38,12 +43,29 @@ export default function List({
             <Head title="List Nasabah" />
 
             <Main>
-                {recentlySuccessful && (
-                    <Toast>
-                        <div>Sukses!</div>
-                        <Toast.Toggle />
-                    </Toast>
-                )}
+                {recentlySuccessful && <Alert color={`success`}>Sukses!</Alert>}
+                <Modal
+                    show={modalShow}
+                    onClose={() => setModalShow(!modalShow)}
+                >
+                    <Modal.Header>Yakin hapus?</Modal.Header>
+                    <Modal.Footer>
+                        <Button
+                            onClick={() => setModalShow(!modalShow)}
+                            pill
+                            color="light"
+                        >
+                            Batal
+                        </Button>
+                        <Button
+                            onClick={() => destroy(deletionId)}
+                            pill
+                            color="failure"
+                        >
+                            Ya, Hapus
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
                 <div className="flex justify-center md:justify-end">
                     <Button
                         pill
@@ -115,9 +137,14 @@ export default function List({
                                                 </Tooltip>
                                                 <Tooltip content="Hapus">
                                                     <Button
-                                                        onClick={() =>
-                                                            destroy(item.id)
-                                                        }
+                                                        onClick={() => {
+                                                            setDeletionId(
+                                                                item.id
+                                                            );
+                                                            setModalShow(
+                                                                !modalShow
+                                                            );
+                                                        }}
                                                         pill
                                                         color="red"
                                                     >

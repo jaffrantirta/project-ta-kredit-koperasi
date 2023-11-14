@@ -9,13 +9,14 @@ class CriteriaStoreRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can('create', Criteria::class);
+        return $this->user()->can('create-criteria', Criteria::class);
     }
 
     public function rules()
     {
         return [
-            //
+            'name' => ['string', 'max:255'],
+            'weight' => ['numeric']
         ];
     }
 }
