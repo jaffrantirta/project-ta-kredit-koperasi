@@ -15,7 +15,8 @@ class StatusUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['string', 'required', 'max:255'],
+            'minimum_value' => ['numeric', 'required', 'max:1', 'min:0']
         ];
     }
 }

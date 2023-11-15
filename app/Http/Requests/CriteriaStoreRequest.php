@@ -9,7 +9,7 @@ class CriteriaStoreRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can('create-criteria', Criteria::class);
+        return $this->user()->can('create', Criteria::class);
     }
 
     public function rules()

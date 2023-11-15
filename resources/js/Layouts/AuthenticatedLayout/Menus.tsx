@@ -36,6 +36,7 @@ export const menus = [
             {
                 title: "Status",
                 url: "status.index",
+                params: { append: ["value"] },
                 hasChild: false,
             },
         ],

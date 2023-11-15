@@ -16,7 +16,7 @@ class StatusQuery extends PaginatedQuery
     }
 
     protected array $append = [
-       //'phone',
+    //    'minimum_value',
     ];
 
     protected string $adminPermission = 'status.view-sensitive-data';
@@ -24,14 +24,14 @@ class StatusQuery extends PaginatedQuery
     protected function getAllowedSorts(): array
     {
         return [
-            //AllowedSort::field('created_at'),
+            AllowedSort::field('created_at'),
         ];
     }
 
     protected function getAllowedFilters(): array
     {
         return [
-            //AllowedFilter::partial('name'),
+            AllowedFilter::partial('name'),
         ];
     }
 

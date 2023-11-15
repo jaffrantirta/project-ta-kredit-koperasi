@@ -1,96 +1,169 @@
 <?php
 return [
     'available_permissions' => [
+        //customer
         [
-            'name' => 'create-customer',
-            'roles' => ['super-admin','admin'],
-        ],
-        [
-            'name' => 'update-customer',
+            'name' => 'customer.viewAny',
             'roles' => ['super-admin','admin','customer'],
         ],
         [
-            'name' => 'remove-customer',
-            'roles' => ['super-admin'],
+            'name' => 'customer.view',
+            'roles' => ['super-admin','admin','customer'],
         ],
         [
-            'name' => 'create-customer-credit',
+            'name' => 'customer.create',
             'roles' => ['super-admin','admin'],
         ],
         [
-            'name' => 'update-customer-credit',
+            'name' => 'customer.update',
+            'roles' => ['super-admin','admin','customer'],
+        ],
+        [
+            'name' => 'customer.delete',
+            'roles' => ['super-admin'],
+        ],
+
+        //customer credit
+        [
+            'name' => 'customercredit.viewAny',
+            'roles' => ['super-admin','admin','customer'],
+        ],
+        [
+            'name' => 'customercredit.view',
+            'roles' => ['super-admin','admin','customer'],
+        ],
+        [
+            'name' => 'customercredit.create',
             'roles' => ['super-admin','admin'],
         ],
         [
-            'name' => 'remove-customer-credit',
-            'roles' => ['super-admin'],
-        ],
-        [
-            'name' => 'create-status',
-            'roles' => ['super-admin'],
-        ],
-        [
-            'name' => 'update-status',
-            'roles' => ['super-admin'],
-        ],
-        [
-            'name' => 'remove-status',
-            'roles' => ['super-admin'],
-        ],
-        [
-            'name' => 'create-criteria',
-            'roles' => ['super-admin'],
-        ],
-        [
-            'name' => 'update-criteria',
-            'roles' => ['super-admin'],
-        ],
-        [
-            'name' => 'remove-criteria',
-            'roles' => ['super-admin'],
-        ],
-        [
-            'name' => 'create-customer-credit-assign-weight',
+            'name' => 'customercredit.update',
             'roles' => ['super-admin','admin'],
         ],
         [
-            'name' => 'update-customer-credit-assign-weight',
-            'roles' => ['super-admin','admin'],
+            'name' => 'customercredit.delete',
+            'roles' => ['super-admin'],
+        ],
+
+        //status
+        [
+            'name' => 'status.viewAny',
+            'roles' => ['super-admin','admin','customer'],
         ],
         [
-            'name' => 'remove-customer-credit-assign-weight',
+            'name' => 'status.view',
+            'roles' => ['super-admin','admin','customer'],
+        ],
+        [
+            'name' => 'status.create',
             'roles' => ['super-admin'],
         ],
         [
-            'name' => 'create-customer-credit-normalization',
-            'roles' => ['super-admin','admin'],
-        ],
-        [
-            'name' => 'update-customer-credit-normalization',
-            'roles' => ['super-admin','admin'],
-        ],
-        [
-            'name' => 'remove-customer-credit-normalization',
+            'name' => 'status.update',
             'roles' => ['super-admin'],
         ],
         [
-            'name' => 'create-customer-credit-evaluate_alternative',
-            'roles' => ['super-admin','admin'],
+            'name' => 'status.delete',
+            'roles' => ['super-admin'],
+        ],
+
+        //criteria
+        [
+            'name' => 'criteria.viewAny',
+            'roles' => ['super-admin','admin','customer'],
         ],
         [
-            'name' => 'update-customer-credit-evaluate_alternative',
-            'roles' => ['super-admin','admin'],
+            'name' => 'criteria.view',
+            'roles' => ['super-admin','admin','customer'],
         ],
         [
-            'name' => 'remove-customer-credit-evaluate_alternative',
+            'name' => 'criteria.create',
             'roles' => ['super-admin'],
         ],
         [
-            'name' => 'assign-role',
+            'name' => 'criteria.update',
             'roles' => ['super-admin'],
         ],
         [
-            'name' => 'revoke-role',
+            'name' => 'criteria.delete',
+            'roles' => ['super-admin'],
+        ],
+
+        //customer credit assign weight
+        [
+            'name' => 'customercreditassignweight.viewAny',
+            'roles' => ['super-admin','admin','customer'],
+        ],
+        [
+            'name' => 'customercreditassignweight.view',
+            'roles' => ['super-admin','admin','customer'],
+        ],
+        [
+            'name' => 'customercreditassignweight.create',
+            'roles' => ['super-admin','admin'],
+        ],
+        [
+            'name' => 'customercreditassignweight.update',
+            'roles' => ['super-admin','admin'],
+        ],
+        [
+            'name' => 'customercreditassignweight.delete',
+            'roles' => ['super-admin'],
+        ],
+
+        //customer credit normalization
+        [
+            'name' => 'customercreditnormalization.viewAny',
+            'roles' => ['super-admin','admin','customer'],
+        ],
+        [
+            'name' => 'customercreditnormalization.view',
+            'roles' => ['super-admin','admin','customer'],
+        ],
+        [
+            'name' => 'customercreditnormalization.create',
+            'roles' => ['super-admin','admin'],
+        ],
+        [
+            'name' => 'customercreditnormalization.update',
+            'roles' => ['super-admin','admin'],
+        ],
+        [
+            'name' => 'customercreditnormalization.delete',
+            'roles' => ['super-admin'],
+        ],
+
+        //customer credit evaluate alternative
+        [
+            'name' => 'customercreditevaluatealternative.viewAny',
+            'roles' => ['super-admin','admin','customer'],
+        ],
+        [
+            'name' => 'customercreditevaluatealternative.view',
+            'roles' => ['super-admin','admin','customer'],
+        ],
+        [
+            'name' => 'customercreditevaluatealternative.create',
+            'roles' => ['super-admin','admin'],
+        ],
+        [
+            'name' => 'customercreditevaluatealternative.update',
+            'roles' => ['super-admin','admin'],
+        ],
+        [
+            'name' => 'customercreditevaluatealternative.remove',
+            'roles' => ['super-admin'],
+        ],
+
+        //assign role
+        [
+            'name' => 'role.assign',
+            'roles' => ['super-admin'],
+        ],
+
+        //revoke role
+        [
+            'name' => 'role.revoke',
             'roles' => ['super-admin'],
         ],
     ],
