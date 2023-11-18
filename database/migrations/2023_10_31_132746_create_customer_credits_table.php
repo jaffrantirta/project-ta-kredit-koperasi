@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('customer_credits', function (Blueprint $table) {
             $table->id();
+            $table->string('purpose');
+            $table->string('description')->nullable();
             $table->foreignIdFor(Customer::class);
-            $table->foreignIdFor(Status::class);
+            $table->foreignIdFor(Status::class)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

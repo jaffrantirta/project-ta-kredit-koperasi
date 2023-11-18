@@ -24,21 +24,22 @@ class CustomerCreditQuery extends PaginatedQuery
     protected function getAllowedSorts(): array
     {
         return [
-            //AllowedSort::field('created_at'),
+            AllowedSort::field('created_at'),
         ];
     }
 
     protected function getAllowedFilters(): array
     {
         return [
-            //AllowedFilter::partial('name'),
+            AllowedFilter::partial('customer_id'),
         ];
     }
 
     protected function getAllowedIncludes(): array
     {
         return [
-            //AllowedInclude::relationship('user'),
+            AllowedInclude::relationship('customer.user'),
+            AllowedInclude::relationship('status'),
         ];
     }
 }

@@ -1,7 +1,9 @@
 import Main from "@/Components/Main";
 import Authenticated from "@/Layouts/AuthenticatedLayout/Index";
+import { faPencilAlt, faReceipt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Head } from "@inertiajs/react";
-import { Card } from "flowbite-react";
+import { Button, Card, Tooltip } from "flowbite-react";
 import moment from "moment";
 
 export default function Show({ customer, auth }: { customer: any; auth: any }) {
@@ -18,6 +20,33 @@ export default function Show({ customer, auth }: { customer: any; auth: any }) {
 
             <Main>
                 <Card>
+                    <div className="w-full flex gap-3 justify-end">
+                        <Tooltip content="Edit">
+                            <Button
+                                pill
+                                href={route("customer.edit", {
+                                    customer: customer.id,
+                                })}
+                            >
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip content="Menampilkn list kredit">
+                            <Button
+                                pill
+                                href={route("credit.index", {
+                                    include: ["customer.user", "status"],
+                                    "filter[customer_id]": customer.id,
+                                })}
+                            >
+                                <div className="flex gap-2 justify-center items-center">
+                                    <FontAwesomeIcon icon={faReceipt} />
+                                    <p>Kredit</p>
+                                </div>
+                            </Button>
+                        </Tooltip>
+                    </div>
+                    <div className="w-full border-b"></div>
                     <div className="grid grid-cols-2">
                         <p>NIK</p>
                         <p className="font-bold">{customer.nik}</p>

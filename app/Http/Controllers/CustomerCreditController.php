@@ -5,14 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerCreditStoreRequest;
 use App\Http\Requests\CustomerCreditUpdateRequest;
 use App\Models\CustomerCredit;
+use App\Models\Customer;
 use App\Queries\CustomerCreditQuery;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CustomerCreditController extends Controller
 {
     public function index(CustomerCreditQuery $customercreditQuery)
     {
-        $data['credits'] = $customercreditQuery->includes()->filterSortPaginateWithAppend();
-        return Inertia::render('Credit/List', $data);
+        $data['customer_credits'] = $customercreditQuery->includes()->filterSortPaginateWithAppend();
+        return Inertia::render('Customer/Credit/List', $data);
+    }
+
+    public function create()
+    {
+        $data['customer'] = Customer::with('user')->find(request('customer_id'));
+        $data['customers'] = Customer::with('user')->get();
+        return Inertia::render('Customer/Credit/Create', $data);
     }
 
     public function store(CustomerCreditStoreRequest $request)
