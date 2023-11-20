@@ -27,7 +27,8 @@ class CustomerCreditController extends Controller
 
     public function store(CustomerCreditStoreRequest $request)
     {
-        return $CustomerCredit::create($request->validated());
+        CustomerCredit::create($request->validated());
+        return redirect()->back();
     }
 
     public function show($customercredit, CustomerCreditQuery $query)

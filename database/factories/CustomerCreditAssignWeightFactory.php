@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Criteria;
-use App\Models\Customer;
+use App\Models\CustomerCredit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +20,7 @@ class CustomerCreditAssignWeightFactory extends Factory
     {
         return [
             'criteria_id' => Criteria::factory()->create(),
-            'customer_id' => Customer::factory()->create(),
+            'customer_credit_id' => CustomerCredit::factory()->create(),
             'value' => fake()->numberBetween(1, 5)
         ];
     }

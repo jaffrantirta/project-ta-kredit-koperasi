@@ -40,6 +40,9 @@ class CustomerCreditQuery extends PaginatedQuery
         return [
             AllowedInclude::relationship('customer.user'),
             AllowedInclude::relationship('status'),
+            AllowedInclude::relationship('customerCreditAssignWeights'),
+            AllowedInclude::relationship('customerCreditEvaluateAlternatives'),
+            AllowedInclude::relationship('customerCreditNormalizations'),
         ];
     }
 }

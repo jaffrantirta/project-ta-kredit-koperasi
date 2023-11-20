@@ -80,7 +80,8 @@ export default function List({
                     <Table>
                         <Table.Head>
                             <Table.HeadCell>No.</Table.HeadCell>
-                            <Table.HeadCell>Nama Nasabah</Table.HeadCell>
+                            <Table.HeadCell>Tujuan Kredit</Table.HeadCell>
+                            <Table.HeadCell>Deskripsi</Table.HeadCell>
                             <Table.HeadCell>Status Kredit</Table.HeadCell>
                             <Table.HeadCell>Dibuat pada:</Table.HeadCell>
                             <Table.HeadCell>Aksi</Table.HeadCell>
@@ -98,10 +99,17 @@ export default function List({
                                         <Table.Row key={index}>
                                             <Table.Cell>{index + 1}</Table.Cell>
                                             <Table.Cell>
-                                                {item.customer.user.name}
+                                                {item.purpose}
                                             </Table.Cell>
                                             <Table.Cell>
-                                                {item.status.name}
+                                                {item.description}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                {item.status?.name || (
+                                                    <p className="text-xs text-yellow-400">
+                                                        Belum diverifikasi
+                                                    </p>
+                                                )}
                                             </Table.Cell>
                                             <Table.Cell>
                                                 {moment(item.created_at).format(
@@ -117,31 +125,17 @@ export default function List({
                                                             {
                                                                 credit: item.id,
                                                                 include: [
-                                                                    "user",
+                                                                    "customer",
+                                                                    "status",
+                                                                    "customerCreditNormalizations",
+                                                                    "customerCreditEvaluateAlternatives",
+                                                                    "customerCreditAssignWeights",
                                                                 ],
                                                             }
                                                         )}
                                                     >
                                                         <FontAwesomeIcon
                                                             icon={faPencil}
-                                                        />
-                                                    </Button>
-                                                </Tooltip>
-                                                <Tooltip content="Hapus">
-                                                    <Button
-                                                        onClick={() => {
-                                                            setDeletionId(
-                                                                item.id
-                                                            );
-                                                            setModalShow(
-                                                                !modalShow
-                                                            );
-                                                        }}
-                                                        pill
-                                                        color="red"
-                                                    >
-                                                        <FontAwesomeIcon
-                                                            icon={faTrash}
                                                         />
                                                     </Button>
                                                 </Tooltip>

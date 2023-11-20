@@ -19,6 +19,7 @@ class CustomerCreditFactory extends Factory
     public function definition(): array
     {
         return [
+            'purpose' => fake()->name(),
             'customer_id' => Customer::factory()->create(),
             'status_id' => Status::factory()->create(),
         ];

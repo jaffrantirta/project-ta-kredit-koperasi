@@ -18,7 +18,7 @@ class CustomerCreditStoreRequest extends FormRequest
             'purpose' => ['string', 'max:255', 'required'],
             'description' => ['string', 'max:255'],
             'customer_id' => ['required', 'exists:customers,id'],
-            'status_id' => ['exists:statuses,id']
+            'status_id' => ['exists:statuses,id', 'nullable']
         ];
     }
 }
