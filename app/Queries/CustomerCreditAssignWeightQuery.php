@@ -3,10 +3,10 @@
 namespace App\Queries;
 
 use App\Models\CustomerCreditAssignWeight;
+use Dwikipeddos\PeddosLaravelTools\Queries\PaginatedQuery;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\AllowedSort;
-use Dwikipeddos\PeddosLaravelTools\Queries\PaginatedQuery;
 
 class CustomerCreditAssignWeightQuery extends PaginatedQuery
 {
@@ -16,7 +16,7 @@ class CustomerCreditAssignWeightQuery extends PaginatedQuery
     }
 
     protected array $append = [
-       //'phone',
+        // 'value',
     ];
 
     protected string $adminPermission = 'customercreditassignweight.view-sensitive-data';
@@ -24,21 +24,21 @@ class CustomerCreditAssignWeightQuery extends PaginatedQuery
     protected function getAllowedSorts(): array
     {
         return [
-            //AllowedSort::field('created_at'),
+            AllowedSort::field('created_at'),
         ];
     }
 
     protected function getAllowedFilters(): array
     {
         return [
-            //AllowedFilter::partial('name'),
+            AllowedFilter::partial('name'),
         ];
     }
 
     protected function getAllowedIncludes(): array
     {
         return [
-            //AllowedInclude::relationship('user'),
+            // AllowedInclude::relationship('user'),
         ];
     }
 }

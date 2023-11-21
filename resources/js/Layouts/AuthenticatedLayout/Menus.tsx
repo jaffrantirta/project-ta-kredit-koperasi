@@ -15,12 +15,6 @@ export const menus = [
                 params: { include: ["user"] },
                 hasChild: false,
             },
-            // {
-            //     title: "Kredit Nasabah",
-            //     url: "credit.index",
-            //     params: { include: ["customer.user", "status"] },
-            //     hasChild: false,
-            // },
         ],
     },
     {

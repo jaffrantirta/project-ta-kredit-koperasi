@@ -11,6 +11,7 @@ use \Illuminate\Database\Eloquent\Relations\HasMany;
 class CustomerCredit extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $fillable = [
         'purpose',
         'description',

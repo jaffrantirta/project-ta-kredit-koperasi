@@ -1,3 +1,4 @@
+import Devider from "@/Components/Devider";
 import Main from "@/Components/Main";
 import Authenticated from "@/Layouts/AuthenticatedLayout/Index";
 import { faPencilAlt, faReceipt } from "@fortawesome/free-solid-svg-icons";
@@ -46,7 +47,7 @@ export default function Show({ customer, auth }: { customer: any; auth: any }) {
                             </Button>
                         </Tooltip>
                     </div>
-                    <div className="w-full border-b"></div>
+                    <Devider />
                     <div className="grid grid-cols-2">
                         <p>NIK</p>
                         <p className="font-bold">{customer.nik}</p>

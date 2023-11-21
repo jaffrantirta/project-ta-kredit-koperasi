@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerCreditStoreRequest;
 use App\Http\Requests\CustomerCreditUpdateRequest;
-use App\Models\CustomerCredit;
 use App\Models\Customer;
+use App\Models\CustomerCredit;
 use App\Queries\CustomerCreditQuery;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -33,7 +33,8 @@ class CustomerCreditController extends Controller
 
     public function show($customercredit, CustomerCreditQuery $query)
     {
-        return $query->includes()->findAndAppend($customercredit);
+        $data['credit'] = $query->includes()->findAndAppend($customercredit);
+        return Inertia::render('Customer/Credit/Show', $data);
     }
 
     public function update(CustomerCreditUpdateRequest $request, CustomerCredit $customercredit)

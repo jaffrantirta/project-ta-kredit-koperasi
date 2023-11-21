@@ -1,3 +1,4 @@
+import Devider from "@/Components/Devider";
 import Main from "@/Components/Main";
 import Authenticated from "@/Layouts/AuthenticatedLayout/Index";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
@@ -30,7 +31,7 @@ export default function Show({ status, auth }: { status: any; auth: any }) {
                             </Button>
                         </Tooltip>
                     </div>
-                    <div className="w-full border-b"></div>
+                    <Devider />
                     <div className="grid grid-cols-2">
                         <p>Nama Status</p>
                         <p className="font-bold">{status.name}</p>
