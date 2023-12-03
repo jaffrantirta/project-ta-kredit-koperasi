@@ -24,10 +24,10 @@ class CustomerCreditEvaluateAlternativeController extends Controller
         return $query->includes()->findAndAppend($customercreditevaluatealternative);
     }
 
-    public function update(CustomerCreditEvaluateAlternativeUpdateRequest $request, CustomerCreditEvaluateAlternative $customercreditevaluatealternative)
+    public function update(CustomerCreditEvaluateAlternativeUpdateRequest $request, CustomerCreditEvaluateAlternative $evaluate_alternative)
     {
-        $customercreditevaluatealternative->update($request->validated());
-        return $customercreditevaluatealternative;
+        $evaluate_alternative->update($request->validated());
+        return redirect()->back();
     }
 
     public function destroy(CustomerCreditEvaluateAlternative $customercreditevaluatealternative)

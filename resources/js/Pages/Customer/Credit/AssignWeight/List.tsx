@@ -1,18 +1,7 @@
-import Main from "@/Components/Main";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout/Index";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "@inertiajs/react";
-import {
-    Alert,
-    Button,
-    Modal,
-    Pagination,
-    Spinner,
-    Table,
-    Tooltip,
-} from "flowbite-react";
-import moment from "moment";
+import { Alert, Button, Modal, Table, Tooltip } from "flowbite-react";
 import { useState } from "react";
 
 export default function List({ assign_weights }: { assign_weights: any }) {

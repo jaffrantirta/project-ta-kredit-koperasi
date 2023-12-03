@@ -10,6 +10,11 @@ class CustomerCreditEvaluateAlternative extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'customer_credit_id',
+        'value'
+    ];
+
     public function criteria(): BelongsTo
     {
         return $this->belongsTo(Criteria::class);

@@ -14,7 +14,7 @@ class CustomerPolicy
 
     public function view(User $user, Customer $customer)
     {
-        return $user->can('customer.view');
+        return $user->can('customer.view') || $user->id == $customer->user_id;
     }
 
     public function create(User $user)
@@ -24,7 +24,7 @@ class CustomerPolicy
 
     public function update(User $user, Customer $customer)
     {
-        return $user->can('customer.update');
+        return $user->can('customer.update') || $user->id == $customer->user_id;
     }
 
     public function delete(User $user, Customer $customer)

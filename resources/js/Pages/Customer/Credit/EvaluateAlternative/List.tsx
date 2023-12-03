@@ -1,7 +1,15 @@
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "@inertiajs/react";
-import { Alert, Button, Modal, Table, Tooltip } from "flowbite-react";
+import {
+    Alert,
+    Button,
+    Label,
+    Modal,
+    Table,
+    TextInput,
+    Tooltip,
+} from "flowbite-react";
 import { useState } from "react";
 
 export default function List({
@@ -9,20 +17,60 @@ export default function List({
 }: {
     evaluate_alternatives: any;
 }) {
-    const { delete: remove, recentlySuccessful } = useForm();
+    const { patch, recentlySuccessful, errors, hasErrors, data, setData } =
+        useForm({
+            id: 0,
+            criteria: "",
+            value: "",
+        });
     const [modalShow, setModalShow] = useState(false);
-    const [deletionId, setDeletionId] = useState(0);
+    console.log(data, "ll");
+    const update = () => {
+        console.log(data, "jj");
 
-    const destroy = (id: number) => {
-        remove(route("evaluate-alternative.destroy", id));
+        patch(
+            route("evaluate-alternative.update", {
+                evaluate_alternative: data.id,
+            })
+        );
+        setModalShow(!modalShow);
+    };
+
+    const onClickHandle = (i: any) => {
+        console.log(i.criteria.name, "ii");
+
+        setData((prevData) => ({
+            ...prevData,
+            value: i.value,
+            criteria: i.criteria.name,
+            id: i.id,
+        }));
+        console.log("Updated Data:", data);
         setModalShow(!modalShow);
     };
 
     return (
         <>
             {recentlySuccessful && <Alert color={`success`}>Sukses!</Alert>}
+            {hasErrors &&
+                Object.entries(errors).map((item: any, ind: any) => (
+                    <Alert key={ind} color={`failure`}>
+                        {item.map((error: any, index: any) => (
+                            <p key={index}>{error}</p>
+                        ))}
+                    </Alert>
+                ))}
+
             <Modal show={modalShow} onClose={() => setModalShow(!modalShow)}>
-                <Modal.Header>Yakin hapus?</Modal.Header>
+                <Modal.Header>Isi nilai kriteria {data.criteria}</Modal.Header>
+                <Modal.Body>
+                    <Label>Nilai</Label>
+                    <TextInput
+                        className="w-full text-center"
+                        value={data.value}
+                        onChange={(e) => setData("value", e.target.value)}
+                    />
+                </Modal.Body>
                 <Modal.Footer>
                     <Button
                         onClick={() => setModalShow(!modalShow)}
@@ -31,12 +79,8 @@ export default function List({
                     >
                         Batal
                     </Button>
-                    <Button
-                        onClick={() => destroy(deletionId)}
-                        pill
-                        color="failure"
-                    >
-                        Ya, Hapus
+                    <Button onClick={() => update()} pill>
+                        Simpan
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -74,20 +118,9 @@ export default function List({
                                             <Tooltip content="Edit">
                                                 <Button
                                                     pill
-                                                    href={route(
-                                                        "evaluate-alternative.show",
-                                                        {
-                                                            evaluate_alternative:
-                                                                item.id,
-                                                            include: [
-                                                                "customer",
-                                                                "status",
-                                                                "customerCreditNormalizations",
-                                                                "customerCreditEvaluateAlternatives",
-                                                                "customerCreditAssignWeights",
-                                                            ],
-                                                        }
-                                                    )}
+                                                    onClick={() =>
+                                                        onClickHandle(item)
+                                                    }
                                                 >
                                                     <FontAwesomeIcon
                                                         icon={faPencil}
