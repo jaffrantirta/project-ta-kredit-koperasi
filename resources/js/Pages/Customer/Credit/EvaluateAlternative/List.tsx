@@ -37,15 +37,12 @@ export default function List({
     };
 
     const onClickHandle = (i: any) => {
-        console.log(i.criteria.name, "ii");
-
         setData((prevData) => ({
             ...prevData,
             value: i.value,
             criteria: i.criteria.name,
             id: i.id,
         }));
-        console.log("Updated Data:", data);
         setModalShow(!modalShow);
     };
 
@@ -89,9 +86,9 @@ export default function List({
                 <Button
                     pill
                     className="my-3"
-                    href={`${route("assign-weight.create")}?customer_id=${
-                        evaluate_alternatives.customer_id
-                    }`}
+                    href={route("evaluate-alternative.create", {
+                        customer_id: evaluate_alternatives.customer_id,
+                    })}
                 >
                     Tambah
                 </Button>

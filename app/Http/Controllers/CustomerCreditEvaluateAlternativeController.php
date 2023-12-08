@@ -6,12 +6,19 @@ use App\Http\Requests\CustomerCreditEvaluateAlternativeStoreRequest;
 use App\Http\Requests\CustomerCreditEvaluateAlternativeUpdateRequest;
 use App\Models\CustomerCreditEvaluateAlternative;
 use App\Queries\CustomerCreditEvaluateAlternativeQuery;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CustomerCreditEvaluateAlternativeController extends Controller
 {
     public function index(CustomerCreditEvaluateAlternativeQuery $customercreditevaluatealternativeQuery)
     {
         return $customercreditevaluatealternativeQuery->includes()->filterSortPaginateWithAppend();
+    }
+
+    public function create()
+    {
+        return Inertia::render('Customer/Credit/EvaluateAlternative/Create');
     }
 
     public function store(CustomerCreditEvaluateAlternativeStoreRequest $request)
