@@ -9,9 +9,15 @@ import ListEvaluateAlternative from "./EvaluateAlternative/List";
 import ListNormalization from "./Normalization/List";
 import Devider from "@/Components/Devider";
 
-export default function Show({ credit, auth }: { credit: any; auth: any }) {
-    console.log(credit);
-
+export default function Show({
+    credit,
+    criterias,
+    auth,
+}: {
+    credit: any;
+    criterias: any;
+    auth: any;
+}) {
     return (
         <Authenticated
             user={auth.user}
@@ -66,6 +72,8 @@ export default function Show({ credit, auth }: { credit: any; auth: any }) {
                     evaluate_alternatives={
                         credit.customer_credit_evaluate_alternatives
                     }
+                    criterias={criterias}
+                    credit={credit}
                 />
 
                 <Devider className="border-slate-300 mt-7" />

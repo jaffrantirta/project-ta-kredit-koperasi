@@ -23,7 +23,17 @@ class CustomerCreditEvaluateAlternativeController extends Controller
 
     public function store(CustomerCreditEvaluateAlternativeStoreRequest $request)
     {
-        return CustomerCreditEvaluateAlternative::create($request->validated());
+        $validatedData = $request->validated();
+
+        $criteriaId = $validatedData['criteria_id'];
+        $customerCreditId = $validatedData['customer_credit_id'];
+
+        CustomerCreditEvaluateAlternative::updateOrCreate(
+            ['criteria_id' => $criteriaId, 'customer_credit_id' => $customerCreditId],
+            $validatedData
+        );
+
+        return redirect()->back();
     }
 
     public function show($customercreditevaluatealternative, CustomerCreditEvaluateAlternativeQuery $query)

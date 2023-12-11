@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CreditWeightValue;
 use App\Http\Requests\CustomerCreditStoreRequest;
 use App\Http\Requests\CustomerCreditUpdateRequest;
+use App\Models\Criteria;
 use App\Models\Customer;
 use App\Models\CustomerCredit;
 use App\Queries\CustomerCreditQuery;
@@ -34,6 +36,7 @@ class CustomerCreditController extends Controller
     public function show($customercredit, CustomerCreditQuery $query)
     {
         $data['credit'] = $query->includes()->findAndAppend($customercredit);
+        $data['criterias'] = Criteria::all();
         return Inertia::render('Customer/Credit/Show', $data);
     }
 

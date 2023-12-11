@@ -11,11 +11,16 @@ import {
     Tooltip,
 } from "flowbite-react";
 import { useState } from "react";
+import ModalCreateEvaluateAlternative from "./Create";
 
 export default function List({
     evaluate_alternatives,
+    criterias,
+    credit,
 }: {
     evaluate_alternatives: any;
+    criterias: any;
+    credit: any;
 }) {
     const { patch, recentlySuccessful, errors, hasErrors, data, setData } =
         useForm({
@@ -24,6 +29,8 @@ export default function List({
             value: "",
         });
     const [modalShow, setModalShow] = useState(false);
+    const [modalEvaliateAlternative, setModalEvaliateAlternative] =
+        useState(false);
     console.log(data, "ll");
     const update = () => {
         console.log(data, "jj");
@@ -86,12 +93,23 @@ export default function List({
                 <Button
                     pill
                     className="my-3"
-                    href={route("evaluate-alternative.create", {
-                        customer_id: evaluate_alternatives.customer_id,
-                    })}
+                    onClick={() =>
+                        setModalEvaliateAlternative(!modalEvaliateAlternative)
+                    }
+                    // href={route("evaluate-alternative.create", {
+                    //     customer_id: evaluate_alternatives.customer_id,
+                    // })}
                 >
                     Tambah
                 </Button>
+                <ModalCreateEvaluateAlternative
+                    modalShow={modalEvaliateAlternative}
+                    setModalShow={() =>
+                        setModalEvaliateAlternative(!modalEvaliateAlternative)
+                    }
+                    criterias={criterias}
+                    customer_credit_id={credit.id}
+                />
             </div>
             <div className="bg-white overflow-x-auto dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <Table>
