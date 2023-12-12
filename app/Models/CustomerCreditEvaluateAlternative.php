@@ -18,10 +18,6 @@ class CustomerCreditEvaluateAlternative extends Model
         'value'
     ];
 
-    protected $casts = [
-        'value' => CreditWeightValue::class
-    ];
-
     public function criteria(): BelongsTo
     {
         return $this->belongsTo(Criteria::class);

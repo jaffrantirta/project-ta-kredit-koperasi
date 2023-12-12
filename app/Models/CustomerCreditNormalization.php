@@ -10,6 +10,12 @@ class CustomerCreditNormalization extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'criteria_id',
+        'value',
+        'customer_credit_id'
+    ];
+
     public function criteria(): BelongsTo
     {
         return $this->belongsTo(Criteria::class);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerCreditNormalizationStoreRequest;
 use App\Http\Requests\CustomerCreditNormalizationUpdateRequest;
 use App\Models\Criteria;
-use App\Models\CustomerCreditEvaluateAlternative;
+use App\Models\CustomerCreditAssignWeight;
 use App\Models\CustomerCreditNormalization;
 use App\Queries\CustomerCreditNormalizationQuery;
 use Illuminate\Http\Request;
@@ -45,14 +45,16 @@ class CustomerCreditNormalizationController extends Controller
         $results = array();
 
         foreach ($criterias as $key => $value) {
-            $max = CustomerCreditEvaluateAlternative::where('criteria_id', $value->id)->max('value');
-            $alternative = CustomerCreditEvaluateAlternative::where('customer_credit_id', $request->customer_credit_id)->where('criteria_id', $value->id)->first();
+            $max = CustomerCreditAssignWeight::where('criteria_id', $value->id)->max('value');
+            $assignWeight = CustomerCreditAssignWeight::where('customer_credit_id', $request->customer_credit_id)->where('criteria_id', $value->id)->first();
 
-            // dd($alternative);
-            $result = $alternative->value / $max;
-            $results[] = $result;
+            $result = $assignWeight->value->value / $max;
+            CustomerCreditNormalization::updateOrCreate(
+                ['criteria_id' => $value->id, 'customer_credit_id' => $request->customer_credit_id],
+                ['value' => $result]
+            );
         }
 
-        return $results;
+        return redirect()->back();
     }
 }
