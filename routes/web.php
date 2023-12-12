@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/report', [ProfileController::class, 'edit'])->name('report');
 
     Route::post('/normalization-summary', [CustomerCreditNormalizationController::class, 'summary'])->name('normalization.summary');
+    Route::post('/evaluate-alternative-summary', [CustomerCreditEvaluateAlternativeController::class, 'summary'])->name('evaluate-alternative.summary');
 
     Route::resource('customer', CustomerController::class);
     Route::resource('credit', CustomerCreditController::class);

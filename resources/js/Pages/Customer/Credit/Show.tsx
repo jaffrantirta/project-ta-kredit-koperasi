@@ -88,7 +88,7 @@ export default function Show({
                         credit.customer_credit_evaluate_alternatives
                     }
                     criterias={criterias}
-                    credit={credit}
+                    customer_credit_id={credit.id}
                 />
             </Main>
         </Authenticated>

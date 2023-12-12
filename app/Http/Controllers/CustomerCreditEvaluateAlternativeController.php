@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerCreditEvaluateAlternativeStoreRequest;
 use App\Http\Requests\CustomerCreditEvaluateAlternativeUpdateRequest;
+use App\Models\Criteria;
 use App\Models\CustomerCreditEvaluateAlternative;
+use App\Models\CustomerCreditNormalization;
 use App\Queries\CustomerCreditEvaluateAlternativeQuery;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -51,5 +54,22 @@ class CustomerCreditEvaluateAlternativeController extends Controller
     {
         $customercreditevaluatealternative->delete();
         return response()->noContent();
+    }
+
+    public function summary(Request $request)
+    {
+        $criterias = Criteria::all();
+
+        foreach ($criterias as $key => $criteria) {
+            $normalization = CustomerCreditNormalization::where('customer_credit_id', $request->customer_credit_id)->where('criteria_id', $criteria->id)->first();
+
+            $result = ($criteria->weight / 100) * $normalization->value;
+            CustomerCreditEvaluateAlternative::updateOrCreate(
+                ['criteria_id' => $criteria->id, 'customer_credit_id' => $request->customer_credit_id],
+                ['value' => $result]
+            );
+        }
+
+        return redirect()->back();
     }
 }

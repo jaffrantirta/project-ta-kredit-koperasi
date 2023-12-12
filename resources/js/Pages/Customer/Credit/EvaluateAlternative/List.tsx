@@ -1,53 +1,22 @@
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "@inertiajs/react";
-import {
-    Alert,
-    Button,
-    Label,
-    Modal,
-    Table,
-    TextInput,
-    Tooltip,
-} from "flowbite-react";
-import { useState } from "react";
-import ModalCreateEvaluateAlternative from "./Create";
+import { Alert, Button, Table } from "flowbite-react";
 
 export default function List({
     evaluate_alternatives,
-    criterias,
-    credit,
+    customer_credit_id,
 }: {
     evaluate_alternatives: any;
     criterias: any;
-    credit: any;
+    customer_credit_id: number;
 }) {
-    const { patch, recentlySuccessful, errors, hasErrors, data, setData } =
-        useForm({
-            id: 0,
-            criteria: "",
-            value: "",
-        });
-    const [modalShow, setModalShow] = useState(false);
-    const [modalEvaliateAlternative, setModalEvaliateAlternative] =
-        useState(false);
-    const update = () => {
-        patch(
-            route("evaluate-alternative.update", {
-                evaluate_alternative: data.id,
-            })
-        );
-        setModalShow(!modalShow);
-    };
+    const { recentlySuccessful, errors, hasErrors, post } = useForm({
+        customer_credit_id: customer_credit_id,
+    });
 
-    const onClickHandle = (i: any) => {
-        setData((prevData) => ({
-            ...prevData,
-            value: i.value,
-            criteria: i.criteria.name,
-            id: i.id,
-        }));
-        setModalShow(!modalShow);
+    console.log(customer_credit_id, "asas");
+
+    const attemptSummary = () => {
+        post(route("evaluate-alternative.summary"));
     };
 
     return (
@@ -62,51 +31,11 @@ export default function List({
                     </Alert>
                 ))}
 
-            <Modal show={modalShow} onClose={() => setModalShow(!modalShow)}>
-                <Modal.Header>Isi nilai kriteria {data.criteria}</Modal.Header>
-                <Modal.Body>
-                    <Label>Nilai</Label>
-                    <TextInput
-                        className="w-full text-center"
-                        value={data.value}
-                        onChange={(e) => setData("value", e.target.value)}
-                    />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button
-                        onClick={() => setModalShow(!modalShow)}
-                        pill
-                        color="light"
-                    >
-                        Batal
-                    </Button>
-                    <Button onClick={() => update()} pill>
-                        Simpan
-                    </Button>
-                </Modal.Footer>
-            </Modal>
             <div className="flex justify-center md:justify-between items-center">
-                <h3 className="font-bold">Alternatif</h3>
-                <Button
-                    pill
-                    className="my-3"
-                    onClick={() =>
-                        setModalEvaliateAlternative(!modalEvaliateAlternative)
-                    }
-                    // href={route("evaluate-alternative.create", {
-                    //     customer_id: evaluate_alternatives.customer_id,
-                    // })}
-                >
-                    Tambah
+                <h3 className="font-bold">Evaluasi Alternatif</h3>
+                <Button onClick={() => attemptSummary()} pill className="my-3">
+                    Hitung
                 </Button>
-                <ModalCreateEvaluateAlternative
-                    modalShow={modalEvaliateAlternative}
-                    setModalShow={() =>
-                        setModalEvaliateAlternative(!modalEvaliateAlternative)
-                    }
-                    criterias={criterias}
-                    customer_credit_id={credit.id}
-                />
             </div>
             <div className="bg-white overflow-x-auto dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <Table>
@@ -114,7 +43,6 @@ export default function List({
                         <Table.HeadCell>No.</Table.HeadCell>
                         <Table.HeadCell>Kriteria</Table.HeadCell>
                         <Table.HeadCell>Nilai</Table.HeadCell>
-                        <Table.HeadCell>Aksi</Table.HeadCell>
                     </Table.Head>
                     <Table.Body>
                         {evaluate_alternatives.map(
@@ -126,20 +54,6 @@ export default function List({
                                             {item.criteria.name}
                                         </Table.Cell>
                                         <Table.Cell>{item.value}</Table.Cell>
-                                        <Table.Cell className="flex gap-3">
-                                            <Tooltip content="Edit">
-                                                <Button
-                                                    pill
-                                                    onClick={() =>
-                                                        onClickHandle(item)
-                                                    }
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon={faPencil}
-                                                    />
-                                                </Button>
-                                            </Tooltip>
-                                        </Table.Cell>
                                     </Table.Row>
                                 );
                             }
