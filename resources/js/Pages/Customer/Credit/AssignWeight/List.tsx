@@ -1,24 +1,76 @@
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "@inertiajs/react";
-import { Alert, Button, Modal, Table, Tooltip } from "flowbite-react";
+import {
+    Alert,
+    Button,
+    Label,
+    Modal,
+    Table,
+    TextInput,
+    Tooltip,
+} from "flowbite-react";
 import { useState } from "react";
+import ModalCreateAssignWeight from "./Create";
 
-export default function List({ assign_weights }: { assign_weights: any }) {
-    const { delete: remove, recentlySuccessful } = useForm();
+export default function List({
+    assign_weights,
+    criterias,
+    customer_credit,
+}: {
+    assign_weights: any;
+    criterias: any;
+    customer_credit: any;
+}) {
+    const { patch, recentlySuccessful, errors, hasErrors, data, setData } =
+        useForm({
+            id: 0,
+            criteria: "",
+            value: "",
+        });
     const [modalShow, setModalShow] = useState(false);
-    const [deletionId, setDeletionId] = useState(0);
+    const [modalAssignWeight, setModalAssignWeight] = useState(false);
+    const update = () => {
+        patch(
+            route("assign-weight.update", {
+                assign_weight: data.id,
+            })
+        );
+        setModalShow(!modalShow);
+    };
 
-    const destroy = (id: number) => {
-        remove(route("assign-weight.destroy", id));
+    const onClickHandle = (i: any) => {
+        setData((prevData) => ({
+            ...prevData,
+            value: i.value,
+            criteria: i.criteria.name,
+            id: i.id,
+        }));
         setModalShow(!modalShow);
     };
 
     return (
         <>
             {recentlySuccessful && <Alert color={`success`}>Sukses!</Alert>}
+            {hasErrors &&
+                Object.entries(errors).map((item: any, ind: any) => (
+                    <Alert key={ind} color={`failure`}>
+                        {item.map((error: any, index: any) => (
+                            <p key={index}>{error}</p>
+                        ))}
+                    </Alert>
+                ))}
+
             <Modal show={modalShow} onClose={() => setModalShow(!modalShow)}>
-                <Modal.Header>Yakin hapus?</Modal.Header>
+                <Modal.Header>Isi nilai kriteria {data.criteria}</Modal.Header>
+                <Modal.Body>
+                    <Label>Nilai</Label>
+                    <TextInput
+                        className="w-full text-center"
+                        value={data.value}
+                        onChange={(e) => setData("value", e.target.value)}
+                    />
+                </Modal.Body>
                 <Modal.Footer>
                     <Button
                         onClick={() => setModalShow(!modalShow)}
@@ -27,20 +79,31 @@ export default function List({ assign_weights }: { assign_weights: any }) {
                     >
                         Batal
                     </Button>
-                    <Button
-                        onClick={() => destroy(deletionId)}
-                        pill
-                        color="failure"
-                    >
-                        Ya, Hapus
+                    <Button onClick={() => update()} pill>
+                        Simpan
                     </Button>
                 </Modal.Footer>
             </Modal>
             <div className="flex justify-center md:justify-between items-center">
-                <h3 className="font-bold">Penetapan Bobot</h3>
-                <Button pill className="my-3">
-                    Hitung
+                <h3 className="font-bold">Penetapan Bobot Tiap Kriteria</h3>
+                <Button
+                    pill
+                    className="my-3"
+                    onClick={() => setModalAssignWeight(!modalAssignWeight)}
+                    // href={route("assign-weight.create", {
+                    //     customer_id: assign_weights.customer_id,
+                    // })}
+                >
+                    Tambah
                 </Button>
+                <ModalCreateAssignWeight
+                    modalShow={modalAssignWeight}
+                    setModalShow={() =>
+                        setModalAssignWeight(!modalAssignWeight)
+                    }
+                    criterias={criterias}
+                    customer_credit_id={customer_credit.id}
+                />
             </div>
             <div className="bg-white overflow-x-auto dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <Table>
@@ -63,19 +126,9 @@ export default function List({ assign_weights }: { assign_weights: any }) {
                                         <Tooltip content="Edit">
                                             <Button
                                                 pill
-                                                href={route(
-                                                    "assign-weight.show",
-                                                    {
-                                                        assign_weight: item.id,
-                                                        include: [
-                                                            "customer",
-                                                            "status",
-                                                            "customerCreditNormalizations",
-                                                            "customerCreditEvaluateAlternatives",
-                                                            "customerCreditAssignWeights",
-                                                        ],
-                                                    }
-                                                )}
+                                                onClick={() =>
+                                                    onClickHandle(item)
+                                                }
                                             >
                                                 <FontAwesomeIcon
                                                     icon={faPencil}

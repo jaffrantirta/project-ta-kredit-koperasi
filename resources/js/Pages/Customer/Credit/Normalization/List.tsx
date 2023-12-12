@@ -5,14 +5,30 @@ import { Alert, Button, Modal, Table, Tooltip } from "flowbite-react";
 import moment from "moment";
 import { useState } from "react";
 
-export default function List({ normalizations }: { normalizations: any }) {
-    const { delete: remove, recentlySuccessful } = useForm();
+export default function List({
+    normalizations,
+    customer_credit_id,
+}: {
+    normalizations: any;
+    customer_credit_id: number;
+}) {
+    const {
+        delete: remove,
+        recentlySuccessful,
+        post,
+    } = useForm({
+        customer_credit_id: customer_credit_id,
+    });
     const [modalShow, setModalShow] = useState(false);
     const [deletionId, setDeletionId] = useState(0);
 
     const destroy = (id: number) => {
         remove(route("normalization.destroy", id));
         setModalShow(!modalShow);
+    };
+
+    const attemptSummary = () => {
+        post(route("normalization.summary"));
     };
 
     return (
@@ -39,7 +55,7 @@ export default function List({ normalizations }: { normalizations: any }) {
             </Modal>
             <div className="flex justify-center md:justify-between items-center">
                 <h3 className="font-bold">Normalisasi</h3>
-                <Button pill className="my-3">
+                <Button onClick={() => attemptSummary()} pill className="my-3">
                     Hitung
                 </Button>
             </div>

@@ -68,24 +68,27 @@ export default function Show({
 
                 <Devider className="border-slate-300 mt-7" />
 
-                <ListEvaluateAlternative
-                    evaluate_alternatives={
-                        credit.customer_credit_evaluate_alternatives
-                    }
+                <ListAssignWeight
+                    assign_weights={credit.customer_credit_assign_weights}
                     criterias={criterias}
-                    credit={credit}
+                    customer_credit={credit}
                 />
 
                 <Devider className="border-slate-300 mt-7" />
 
                 <ListNormalization
                     normalizations={credit.customer_credit_normalizations}
+                    customer_credit_id={credit.id}
                 />
 
                 <Devider className="border-slate-300 mt-7" />
 
-                <ListAssignWeight
-                    assign_weights={credit.customer_credit_assign_weights}
+                <ListEvaluateAlternative
+                    evaluate_alternatives={
+                        credit.customer_credit_evaluate_alternatives
+                    }
+                    criterias={criterias}
+                    credit={credit}
                 />
             </Main>
         </Authenticated>

@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/report', [ProfileController::class, 'edit'])->name('report');
 
+    Route::post('/normalization-summary', [CustomerCreditNormalizationController::class, 'summary'])->name('normalization.summary');
+
     Route::resource('customer', CustomerController::class);
     Route::resource('credit', CustomerCreditController::class);
     Route::resource('assign-weight', CustomerCreditAssignWeightController::class);

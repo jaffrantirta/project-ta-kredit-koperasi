@@ -16,7 +16,17 @@ class CustomerCreditAssignWeightController extends Controller
 
     public function store(CustomerCreditAssignWeightStoreRequest $request)
     {
-        return CustomerCreditAssignWeight::create($request->validated());
+        $validatedData = $request->validated();
+
+        $criteriaId = $validatedData['criteria_id'];
+        $customerCreditId = $validatedData['customer_credit_id'];
+
+        CustomerCreditAssignWeight::updateOrCreate(
+            ['criteria_id' => $criteriaId, 'customer_credit_id' => $customerCreditId],
+            $validatedData
+        );
+
+        return redirect()->back();
     }
 
     public function show($customercreditassignweight, CustomerCreditAssignWeightQuery $query)
@@ -24,10 +34,10 @@ class CustomerCreditAssignWeightController extends Controller
         return $query->includes()->findAndAppend($customercreditassignweight);
     }
 
-    public function update(CustomerCreditAssignWeightUpdateRequest $request, CustomerCreditAssignWeight $customercreditassignweight)
+    public function update(CustomerCreditAssignWeightUpdateRequest $request, CustomerCreditAssignWeight $assign_weight)
     {
-        $customercreditassignweight->update($request->validated());
-        return $customercreditassignweight;
+        $assign_weight->update($request->validated());
+        return redirect()->back();
     }
 
     public function destroy(CustomerCreditAssignWeight $customercreditassignweight)

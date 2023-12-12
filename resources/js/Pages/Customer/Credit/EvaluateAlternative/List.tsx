@@ -31,10 +31,7 @@ export default function List({
     const [modalShow, setModalShow] = useState(false);
     const [modalEvaliateAlternative, setModalEvaliateAlternative] =
         useState(false);
-    console.log(data, "ll");
     const update = () => {
-        console.log(data, "jj");
-
         patch(
             route("evaluate-alternative.update", {
                 evaluate_alternative: data.id,
