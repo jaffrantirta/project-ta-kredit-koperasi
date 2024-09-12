@@ -33,6 +33,6 @@ class User extends Authenticatable
 
     public function customer(): HasOne
     {
-        return $this->hasOne(customer::class);
+        return $this->hasOne(Customer::class);
     }
 }
